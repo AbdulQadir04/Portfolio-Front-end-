@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-showcase="1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abdul Qadir — Portfolio</title>
+  <meta name="description" content="Abdul Qadir — Front-End Developer. Hybrid portfolio: clean & flashy with React-powered components." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- React (interactive components only) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel for JSX (dev only) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <header role="banner">
+    <nav class="navbar container" role="navigation" aria-label="Primary navigation">
+      <div class="logo" aria-hidden="false">
+        <strong>Abdul Qadir</strong>
+        <span class="sr-only">Abdul Qadir — Front-End Developer</span>
+      </div>
+
+      <ul id="menu" class="nav-list" role="menu" aria-label="Main menu">
+        <li role="none"><a role="menuitem" class="nav-link" href="#hero">Home</a></li>
+        <li role="none"><a role="menuitem" class="nav-link" href="#about">About</a></li>
+        <li role="none"><a role="menuitem" class="nav-link" href="#skills">Skills</a></li>
+        <li role="none"><a role="menuitem" class="nav-link" href="#projects">Projects</a></li>
+        <li role="none"><a role="menuitem" class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="controls" role="group" aria-label="Appearance controls">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
+        <button id="styleToggle" class="theme-toggle" aria-pressed="true" aria-label="Toggle showcase">⚡</button>
+        <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero anchor-fix" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 id="hero-heading">Hi, I’m <span class="name">Abdul Qadir</span></h1>
+          <p class="lead">Front-End Developer building performant, accessible and delightful interfaces — a hybrid of clean design and expressive motion.</p>
+
+          <div class="hero-ctas">
+            <a class="btn" href="#projects">View Projects</a>
+            <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          </div>
+
+          <div class="hero-features">
+            <div class="chip">Responsive</div>
+            <div class="chip">Accessible</div>
+            <div class="chip">React</div>
+            <div class="chip">Motion</div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-wrap" id="visualWrap">
+            <img class="lazy" src="assets/laptop.png" alt="Laptop mockup showing UI" loading="lazy" />
+          </div>
+          <div class="blob blob-1"></div>
+          <div class="blob blob-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading">About</h2>
+        <p class="lead"><b></b>I focus on thoughtful interactions, semantic markup, and performant UI. I balance polished craftsmanship with pragmatic code.</p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section" aria-labelledby="skills-heading">
+      <div class="container">
+        <h2 id="skills-heading">Skills</h2>
+        <div class="skills-grid" role="list">
+          <div class="skill-card" role="listitem">HTML</div>
+          <div class="skill-card" role="listitem">CSS</div>
+          <div class="skill-card" role="listitem">JavaScript</div>
+          <div class="skill-card" role="listitem">React</div>
+          <div class="skill-card" role="listitem">UI/UX</div>
+          <div class="skill-card" role="listitem">Python</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" aria-labelledby="projects-heading">
+      <div class="container">
+        <h2 id="projects-heading">Projects</h2>
+        <div id="sliderRoot" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading">Contact</h2>
+        <div id="contactRoot" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="section" aria-label="Footer">
+    <div class="container center">
+      <small>&copy; <span id="year"></span> Abdul Qadir — Built with care.</small>
+    </div>
+  </footer>
+
+  <!-- core script -->
+  <script src="script.js"></script>
+
+  <!-- React components (JSX via Babel) -->
+  <script type="text/babel" src="Slider.js"></script>
+  <script type="text/babel" src="ContactForm.js"></script>
+</body>
+</html>
