@@ -1,89 +1,97 @@
-/** ContactForm.js — React component (validation, UX, ready to hook to backend) */
+/** ContactForm.js — Professional Contact Form (accessible, validated, UX-polished) */
 const { useState } = React;
 
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState({ ok: null, text: "" });
-  const [touched, setTouched] = useState({});
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState("idle"); // idle | sending | success
 
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmail = email =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  function validate() {
+    const nextErrors = {};
+    if (!form.name.trim()) nextErrors.name = "Name is required.";
+    if (!form.email.trim()) nextErrors.email = "Email is required.";
+    else if (!validateEmail(form.email)) nextErrors.email = "Enter a valid email.";
+    if (!form.message.trim()) nextErrors.message = "Message is required.";
+    return nextErrors;
   }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-  }
-
-  function markTouched(e) {
-    setTouched({ ...touched, [e.target.name]: true });
+    setErrors({ ...errors, [e.target.name]: null });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setStatus({ ok: null, text: "" });
-
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
-      setStatus({ ok: false, text: "Please fill all fields." });
-      return;
-    }
-    if (!validateEmail(form.email)) {
-      setStatus({ ok: false, text: "Please enter a valid email address." });
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
       return;
     }
 
-    // Simulate send. Replace this with real API/EmailJS/Netlify integration.
-    setStatus({ ok: null, text: "Sending..." });
+    setStatus("sending");
+
+    // Simulated send — replace with API
     setTimeout(() => {
-      setStatus({ ok: true, text: "Message sent — thank you!" });
+      setStatus("success");
       setForm({ name: "", email: "", message: "" });
-      setTouched({});
+      setErrors({});
     }, 900);
   }
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="form-row">
-        <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          onBlur={markTouched}
-          placeholder="Your name"
-          aria-label="Name"
-        />
-        <input
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          onBlur={markTouched}
-          placeholder="Email address"
-          aria-label="Email"
-          type="email"
-        />
+        <div>
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your name"
+            aria-invalid={!!errors.name}
+            required
+          />
+          {errors.name && <small className="status error">{errors.name}</small>}
+        </div>
+
+        <div>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="Email address"
+            aria-invalid={!!errors.email}
+            required
+          />
+          {errors.email && <small className="status error">{errors.email}</small>}
+        </div>
       </div>
 
-      <textarea
-        name="message"
-        value={form.message}
-        onChange={handleChange}
-        onBlur={markTouched}
-        placeholder="Your message"
-        rows="6"
-        aria-label="Message"
-      />
+      <div>
+        <textarea
+          name="message"
+          rows="6"
+          value={form.message}
+          onChange={handleChange}
+          placeholder="Your message"
+          aria-invalid={!!errors.message}
+          required
+        />
+        {errors.message && <small className="status error">{errors.message}</small>}
+      </div>
 
-      {status.text && (
-        <div className={status.ok === true ? "status ok" : status.ok === false ? "status error" : "status"}>
-          {status.text}
-        </div>
+      {status === "success" && (
+        <div className="status ok">Message sent successfully.</div>
       )}
 
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-        <button className="btn" type="submit">Send Message</button>
-        <button type="button" className="btn btn-ghost" onClick={() => { setForm({ name: "", email: "", message: "" }); setStatus({ ok: null, text: "" }); }}>Reset</button>
-      </div>
+      <button className="btn" type="submit" disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : "Send Message"}
+      </button>
     </form>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('contactRoot')).render(<ContactForm />);
+ReactDOM.createRoot(document.getElementById("contactRoot")).render(<ContactForm />);
